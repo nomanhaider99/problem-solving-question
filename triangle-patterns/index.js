@@ -9,6 +9,15 @@ function trianglePattern() {
     }
 }
 trianglePattern();
+/*
+Output:
+*
+**
+***
+****
+*****
+
+*/
 function reverseTrianglePattern() {
     for (let x = 1; x <= 5; x++) {
         let pattern = "";
@@ -19,3 +28,13 @@ function reverseTrianglePattern() {
     }
 }
 reverseTrianglePattern();
+/*
+Output:
+
+*****
+****
+***
+**
+*
+
+*/ 
