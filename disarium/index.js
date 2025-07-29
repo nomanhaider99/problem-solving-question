@@ -12,4 +12,7 @@ function checkDisarium(num) {
         return "Not a Disarium";
     }
 }
-console.log(checkDisarium(172));
+console.log(checkDisarium(412));
+// 89
+// 8**1 + 9**2 = 8 + 81 = 89
+// 4**1 + 1**2 + 2**3 = 4 + 1x1 + 8 = 13
