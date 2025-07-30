@@ -1,14 +1,14 @@
 const ones = [
-  " ", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+  "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"
 ];
 
 const teens = [
   "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-  "sixteen", "seventeen", "eighteen", "nineteen"
+  "sixteen", "seventeen", "eighteen", "nineteen", "twenty"
 ];
 
 const tens = [
-  " ", "ten", "twenty", "thirty", "forty", "fifty",
+  "", "ten", "twenty", "thirty", "forty", "fifty",
   "sixty", "seventy", "eighty", "ninety"
 ];
 
@@ -26,46 +26,44 @@ const millions = [
 ];
 
 function numberToWords(num: number) {
-  const stringedNumber = num.toString();
   let chunks = [];
-  let wordsChunk = [];
-  let words = '';
-
-  for (let x = stringedNumber.length; x > 0; x -= 3) {
-    if (stringedNumber.slice(x - 3, x).length == 3) {
-      chunks.unshift(stringedNumber.slice(x - 3, x));
-    } else {
-      chunks.unshift(stringedNumber.slice(0, x));
-    }
+  let words: string[] = [];
+  if (num == 0) {
+    words.unshift("zero");
   }
+  else if (num > 0 && num <= 10) {
+    words.unshift(ones[num]);
+  }
+  else if (num > 10 && num <= 20) {
+    words.unshift(teens[num - 11]);
+  }
+  else if (num > 20) {
+    const stringed = num.toString();
 
-  for (let i = chunks.length - 1; i >= 0; i--) {
-    const stringedChunk = chunks[i];
-    let word = '';
-    if (chunks[i].includes('0')) {
-      if (chunks[i].endsWith('0') && chunks[i].length == 3) {
-        word = ones[Number(stringedChunk[0])] + " hundred " + tens[Number(stringedChunk[1])]
-      } else if (chunks[i].endsWith('0') && chunks[i].length == 2) {
-        word = tens[Number(stringedChunk[0])]
-      } else if (chunks[i].startsWith('0')) {
-        word = tens[Number(stringedChunk[1])] + " " + ones[Number(stringedChunk[2])];
-      }
-    } else {
-      if (chunks[i].length == 2) {
-        if (Number(chunks[i]) > 10 && Number(chunks[i]) < 20) {
-        word = teens[Number(stringedChunk[1])-1];
+    for (let x = stringed.length; x > 0; x -= 3) {
+      if ((stringed.slice(x - 3, x)).length === 3) {
+        chunks.unshift(stringed.slice(x - 3, x));
       } else {
-        word = ones[Number(stringedChunk[0])];
-      }
-      } else {
-        word = ones[Number(stringedChunk[0])] + " hundred " + tens[Number(stringedChunk[1])] + " " + ones[Number(stringedChunk[2])];
+        chunks.unshift(stringed.slice(0, x));
       }
     }
-    wordsChunk.unshift(word);
-  }
 
-  console.log(chunks)
-  return wordsChunk;
+    for (let i = chunks.length - 1; i >= 0; i--) {
+      if (chunks[i].length === 3) {
+        if (Number(chunks[i][1] + chunks[i][2]) >= 10 && Number(chunks[i][1] + chunks[i][2]) <= 20) {
+          words.unshift(ones[Number(chunks[i][0])] + " hundred " + teens[Number(chunks[i][1] + chunks[i][2]) - 11] + " " + millions[(chunks.length - i) - 1]);
+        } else {
+          words.unshift(ones[Number(chunks[i][0])] + " hundred " + tens[Number(chunks[i][1])] + " " + ones[Number(chunks[i][2])] + " " + millions[(chunks.length - i) - 1]);
+        }
+      } else if (chunks[i].length === 2) {
+        words.unshift(tens[Number(chunks[i][0])] + " " + ones[Number(chunks[i][1])] + " " + millions[(chunks.length - i) - 1]);
+      } else {
+        words.unshift(ones[Number(chunks[i][0])] + " " + millions[(chunks.length - i) - 1]);
+      }
+    }
+
+  }
+  return words.join(" ");
 }
 
-console.log(numberToWords(115));
+console.log(numberToWords(299399929979919));
