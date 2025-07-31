@@ -1,20 +1,20 @@
 "use strict";
-var inputString = "racecarxyzmadamabc"; // Output: racecar 
-var longest = "";
-function checkLogestPalindrome() {
-    for (var x = 0; x <= inputString.length; x++) {
-        for (var y = inputString.length; y > 1; y--) {
-            var slicedString = inputString.slice(x, y);
-            var reversedString = slicedString.split("").reverse().join("");
-            if (slicedString.length >= 2) {
-                if (slicedString == reversedString) {
-                    if (slicedString.length > longest.length) {
-                        longest = slicedString;
-                    }
-                }
+function longestPalindrome(s) {
+    let palindromes = [];
+    for (let x = 0 - 1; x < s.length; x++) {
+        for (let y = s.length; y >= x; y--) {
+            if (s.slice(x, y) === s.slice(x, y).split('').reverse().join('')) {
+                palindromes.push(s.slice(x, y));
             }
+        }
+    }
+    let longest = palindromes[0];
+    for (let i in palindromes) {
+        if (palindromes[i].length > longest.length) {
+            longest = palindromes[i];
         }
     }
     return longest;
 }
-console.log(checkLogestPalindrome());
+;
+console.log(longestPalindrome('noonmadamstats'));
