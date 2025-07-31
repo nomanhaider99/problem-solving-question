@@ -63,4 +63,4 @@ function numberToWords(num) {
     }
     return words.join(" ");
 }
-console.log(numberToWords(299399929979919));
+console.log(numberToWords(299399029979919));
